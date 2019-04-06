@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>
+        {% block title %}NGO - Donation{% endblock %}
+    </title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Noto+Serif+TC|Patua+One|Playfair+Display|Libre+Baskerville" rel="stylesheet">
+    <style>
+        {% block css %}
+        body, p, h1 {
+            margin: 0px;
+        }
+
+        a {
+          color: #00a8b5;
+        }
+
+        .table{
+            color: #5c8d89;
+        }
+        p {
+            margin-bottom: 10px;
+        }
+        #container {
+            display: grid;
+            grid-template-columns: 20% 80%;
+        }
+        #header {
+            background-color: #98ccd3;
+            grid-column-start: 1;
+            grid-column-end: 3;
+            color: #1d5464;
+            font-family: 'Noto Serif TC', serif;
+        }
+        #sidebar, #left {
+            background-color: #f3f9fb;
+            font-family: 'Libre Baskerville', serif;
+            color: #207e82;
+        }
+        #content, #right {
+            background-color: #f3f9fb;
+            font-family: 'Playfair Display', serif;
+            color: #298f9b;
+        }
+        #header {
+            padding: 30px;
+        }
+        #sidebar, #content {
+            padding: 20px;
+        }
+        #background {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            background-color: #000;
+        }
+        #left {
+            position: fixed;
+            width: 20%;
+            height: 100%;
+        }
+        #right {
+            position: fixed;
+            left: 20%;
+            width: 80%;
+            height: 100%;
+        }
+        {% endblock %}
+    </style>
+</head>
+<body>
+
+    <div id="container">
+    <div id="header">
+        {% block header %}<h1>NGO Donation Site</h1>{% endblock %}
+    </div>
+    <div id="sidebar" color="#00bdaa">
+        {% block sidebar %}
+            {% include "donation/login_status.html" %}
+            <hr />
+            {% include "donation/sidebar_urls.html" %}
+        {% endblock %}
+
+        {% if request.user.is_staff %}
+
+            <div class="admin-panel align-items-center">
+                <br>
+                <a href="/admin" class="btn btn-outline-info">Admin Panel</a>
+                {% block admin-panel %}
+
+                {% endblock %}
+            </div>
+
+        {% endif %}
+
+    </div>
+    <div id="content">
+        {% block content %}
+        {% lorem 10 p %}
+        {% endblock %}
+    </div>
+    </div>
+    <div id="background">
+    <div id="left"></div>
+    <div id="right"></div>
+    </div>
+
+
+</body>
+
+</html>
