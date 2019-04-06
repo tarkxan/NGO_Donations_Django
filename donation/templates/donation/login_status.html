@@ -1,0 +1,8 @@
+{% if user.username %}
+    <h3>Welcome, {{ user.first_name }}.</h3>
+    <br>
+    <p><a href="{% url 'donation:logout' %}" class="btn btn-info">Logout</a></p>
+{% else %}
+    <p>No one is logged in.</p>
+    <p><a href="{% url 'donation:login' %} " class="btn btn-info">Login</a></p>
+{% endif %}

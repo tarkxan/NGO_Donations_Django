@@ -1,0 +1,33 @@
+{% extends "donation/base.html" %}
+
+{% block sidebar %}
+<p><strong>Currently logging in</strong></p>
+{% endblock %}
+
+{% block content %}
+{% if form.errors %}
+<h1 class="mb-5">Your username and password did not match. Please try again</h1>
+{% endif %}
+
+<h2>Login</h2>
+
+<form method="post" action="{% url 'donation:login' %}">
+    <table>
+        <tr>
+            <td>{{ form.username.label_tag }}</td>
+            <td>{{ form.username }}</td>
+        </tr>
+        <tr>
+            <td>{{ form.password.label_tag }}</td>
+            <td>{{ form.password }}</td>
+        </tr>
+        <tr>
+            <td><input type="hidden" name="next" value="{{ next }}"/></td>
+        </tr>
+    </table>
+
+    <input type="submit" class="btn btn-secondary" value="login" />
+
+    {% csrf_token %}
+</form>
+{% endblock %}

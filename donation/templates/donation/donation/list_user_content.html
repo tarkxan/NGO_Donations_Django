@@ -1,0 +1,25 @@
+{% if donations %}
+<h1 class="mb-5">Here are the donations you have made:</h1>
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">Date Donated</th>
+            <th scope="col">Time Donated</th>
+            <th scope="col">Donation Amount</th>
+            <th scope="col">Donation Type</th>
+        </tr>
+    </thead>
+    {% for donation in donations %}
+    <tbody>
+        <tr>
+            <td>{{ donation.donation_time|date:"M d, Y" }}</td>
+            <td>{{ donation.donation_time|time:"h:i A" }}</td>
+            <td>${{ donation.amount }}</td>
+            <td>{{ donation.type }}</td>
+        </tr>
+    </tbody>
+    {% endfor %}
+</table>
+{% else %}
+<h1 class="mb-5">You have not made any donations yet.</h1>
+{% endif %}

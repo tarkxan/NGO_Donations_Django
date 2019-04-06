@@ -1,0 +1,13 @@
+{% if sidebar_urls %}
+{% for url in sidebar_urls %}
+    {% if url.url == request.path %}
+        <br>
+        <p><strong>{{url.name}}</strong></p>
+
+    {% else %}
+        <br>
+        <p><a href="{{url.url}}">{{ url.name }}</a></p>
+
+    {% endif %}
+{% endfor %}
+{% endif %}

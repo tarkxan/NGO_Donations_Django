@@ -1,0 +1,52 @@
+{% extends "donation/base.html" %}
+
+
+{% block content %}
+
+{% if donation_types %}
+<h1>Gifts</h1>
+
+{% if form.errors %}
+    {% for field in form %}
+        {% if field.errors %}
+        <p>Field "{{ field.name }}" has some errors</p>
+            {% for error in field.errors %}
+            <p>{{ error|escape }}</p>
+            {% endfor %}
+        {% endif %}
+    {% endfor %}
+{% endif %}
+
+<form method="post" enctype="multipart/form-data" action="">
+    {% csrf_token %}
+    <table>
+        <tr>
+            <th></th>
+            <th></th>
+            <th>Click for Monthly Recurring Gift</th>
+        </tr>
+        {% for field in form %}
+            {% if field.name == 'user_id' %}
+            <input type="hidden" name="user_id" value="{{ request.user.id }}" />
+            {% else %}
+                {% if not forloop.counter|divisibleby:2 %}
+                <tr>
+                    <td>{{ field.label }}</td>
+                    <td><input type="number" step="0.01" name="{{ field.name }}" value="{{ field.value }}" /></td>
+                {% else %}
+                    {% if field.label %}
+                    <td><input type="checkbox" name="{{ field.name }}" {% if field.value %}checked{% endif %} /></td>
+                    {% endif %}
+                </tr>
+                {% endif %}
+            {% endif %}
+        {% endfor %}
+    </table>
+    <input class="btn btn-secondary" type="submit" name="cancel" value="Cancel" />
+    <input class="btn btn-secondary" type="submit" name="submit" value="Submit" />
+</form>
+{% else %}
+<p>Sorry, donation isn't open at this time.</p>
+{% endif %}
+
+{% endblock %}
